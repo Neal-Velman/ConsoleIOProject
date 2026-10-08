@@ -38,7 +38,8 @@ namespace CSC160_ConsoleMenu
                 {
                     Console.WriteLine("Input was invalid. Please try again.\n");
                 }
-            }while(isInvalid);
+            } 
+            while(isInvalid);
 
             return input!;
         }
