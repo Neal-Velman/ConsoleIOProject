@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="Automatic Tester/Automatic Tester.csproj" Id="15038e87-c84f-47c3-9217-6ca37f38e230" />
   <Project Path="ConsoleIOLib/ConsoleIOLib.csproj" />
+  <Project Path="ManualTester/ManualTester.csproj" Id="f749eee5-2b36-47f1-85b2-6e81cdf3bdfc" />
 </Solution>
