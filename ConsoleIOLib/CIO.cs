@@ -67,7 +67,39 @@ namespace CSC160_ConsoleMenu
         /// </exception>
         public static bool PromptForBool(string prompt, string trueString, string falseString)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(prompt))
+            {
+                throw new ArgumentException("The prompt cannot be null, empty, or whitespace");
+            }
+
+            if (trueString == null || falseString == null)
+            {
+                throw new ArgumentException("The trueString and falseString aren't allowed to be null.");
+            }
+
+            string? input = null;
+            bool isInvalid = true;
+
+            do
+            {
+                Console.WriteLine(prompt);
+                input = Console.ReadLine();
+                if(input?.ToLower() == trueString.ToLower() )
+                {
+                    return true;
+                } 
+                else if (input?.ToLower() == falseString.ToLower())
+                {
+                    return false;
+                } 
+                else
+                {
+                    Console.WriteLine("Invalid input. Please try again.");
+                    continue;
+                }
+            } while(isInvalid);
+
+            return false;
         }
 
         /// <summary>
@@ -86,7 +118,42 @@ namespace CSC160_ConsoleMenu
         /// </exception>
         public static int PromptForInt(string prompt, int min, int max)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(prompt))
+            {
+                throw new ArgumentException("The prompt cannot be null, empty, or whitespace");
+            }
+
+            if (min > max)
+            {
+                throw new ArgumentException("min may not be less than max");
+            }
+
+            int input = min - 1;
+            bool isInvalid = true;
+            int parsedNum = min - 1;
+
+            do
+            {
+                Console.WriteLine(prompt);
+
+                if(Int32.TryParse(Console.ReadLine(), out int parsedInput)) {
+                    parsedNum = parsedInput;
+                    if (parsedNum >= min && parsedNum <= max)
+                    {
+                        isInvalid = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please try again.\n");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please try again.\n");
+                }
+            } while (isInvalid);
+
+            return parsedNum;
         }
 
         /// <summary>
