@@ -180,6 +180,10 @@ namespace CSC160_ConsoleMenu
                 {
                     throw new ArgumentException("No string in 'options' may be null.");
                 }
+                //if (string.IsNullOrWhiteSpace(options.ElementAt(i)))
+                //{
+                //    throw new ArgumentException("No string in 'options' may be null, empty, or contain whitespace.");
+                //}
             }
             if (options.Count() == 0 && !withQuit)
             {
