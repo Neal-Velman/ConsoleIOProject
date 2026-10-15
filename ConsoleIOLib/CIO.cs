@@ -18,7 +18,7 @@ namespace CSC160_ConsoleMenu
         ///     prompt is empty
         ///     prompt is just whitespace
         /// </exception>
-        public static string PromptForInput(string prompt, bool allowEmpty)
+        public static string PromptForInput(string prompt, bool allowEmpty = false)
         {
             if (string.IsNullOrWhiteSpace(prompt))
             {
@@ -77,18 +77,21 @@ namespace CSC160_ConsoleMenu
                 throw new ArgumentException("The trueString and falseString aren't allowed to be null.");
             }
 
-            string? input = null;
-            bool isInvalid = true;
-
-            do
+            if (trueString.ToLower() == falseString.ToLower())
             {
-                Console.WriteLine(prompt);
-                input = Console.ReadLine();
-                if(input?.ToLower() == trueString.ToLower() )
+                throw new ArgumentException("The trueString and falseString aren't allowed to be equal to each other");
+            }
+
+            bool isInvalid = true;
+            do
+
+            {
+                string? output = PromptForInput(prompt);
+                if(output?.ToLower() == trueString.ToLower() )
                 {
                     return true;
                 } 
-                else if (input?.ToLower() == falseString.ToLower())
+                else if (output?.ToLower() == falseString.ToLower())
                 {
                     return false;
                 } 
@@ -125,18 +128,17 @@ namespace CSC160_ConsoleMenu
 
             if (min > max)
             {
-                throw new ArgumentException("min may not be less than max");
+                throw new ArgumentException("min may not be greater than max");
             }
 
-            int input = min - 1;
             bool isInvalid = true;
             int parsedNum = min - 1;
+            
 
             do
             {
-                Console.WriteLine(prompt);
-
-                if(Int32.TryParse(Console.ReadLine(), out int parsedInput)) {
+                string? output = PromptForInput(prompt);
+                if (Int32.TryParse(output, out int parsedInput)) {
                     parsedNum = parsedInput;
                     if (parsedNum >= min && parsedNum <= max)
                     {
@@ -150,6 +152,7 @@ namespace CSC160_ConsoleMenu
                 else
                 {
                     Console.WriteLine("Invalid input. Please try again.\n");
+                    continue;
                 }
             } while (isInvalid);
 
@@ -170,7 +173,51 @@ namespace CSC160_ConsoleMenu
         /// </exception>
         public static int PromptForMenuSelection(IEnumerable<string> options, bool withQuit)
         {
-            throw new NotImplementedException();
+            
+            for (int i = 0; i < options.Count(); i++)
+            {
+                if (options.ElementAt(i) == null)
+                {
+                    throw new ArgumentException("No string in 'options' may be null.");
+                }
+            }
+            if (options.Count() == 0 && !withQuit)
+            {
+                throw new ArgumentException("If 'options' is empty, then withQuit MUST be true so that user has at least one choice.");
+            }
+
+            bool isInvalid = true;
+            int choice = -1;
+
+            do
+            {
+                for (int i = 0; i < options.Count(); i++)
+                {
+                    Console.WriteLine((i + 1) + ": " + options.ElementAt(i));
+                }
+                if (withQuit)
+                {
+
+                    Console.WriteLine("\n\n0: Quit");
+                }
+                if (options.Count() > 0 && withQuit)
+                {
+                    choice = PromptForInt( "========================="/*"Choose a number between 1 and " + options.Count()*/, 0, options.Count());
+                    isInvalid = false;
+                }
+                else if (options.Count() > 0 && !withQuit)
+                {
+                    choice = PromptForInt("========================="/*"Choose a number between 1 and " + options.Count()*/, 1, options.Count());
+                    isInvalid = false;
+                }
+                else
+                {
+                    choice = PromptForInt("Choose 0 to quit", 0, 0);
+                    isInvalid = false;
+                }
+            } while (isInvalid);
+
+            return choice;
         }
     }
 }

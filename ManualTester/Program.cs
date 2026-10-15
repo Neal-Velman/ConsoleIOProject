@@ -6,7 +6,8 @@
         {
             //DemoInput();
             //DemoBoolean();
-            DemoInt();
+            //DemoInt();
+            DemoMenu();
         }
 
         private static void DemoInput()
@@ -26,6 +27,20 @@
         {
             int result = CIO.PromptForInt("Enter and integer between 1 and 100: ", 1, 100);
             Console.WriteLine($"You entered: {result}");
+        }
+
+        private static void DemoMenu()
+        {
+            string[] options = { "Play", "Options", "Credits", "Extras", "Achievements" };
+            int choice = CIO.PromptForMenuSelection(options, true);
+            if (choice > 0)
+            {
+                Console.WriteLine($"You chose #{choice}: {options[choice - 1]}");
+            }
+            else
+            {
+                Console.WriteLine($"You chose #{choice}: Have a great day!");
+            }
         }
     }
 }

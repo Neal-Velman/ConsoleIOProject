@@ -1,6 +1,6 @@
 ﻿namespace Automatic_Tester
 {
-    public class UnitTest1
+    public class ConsoleIOTests
     {
         [Fact]
         public void Test1()
