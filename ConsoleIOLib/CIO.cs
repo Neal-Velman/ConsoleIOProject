@@ -74,7 +74,7 @@ namespace CSC160_ConsoleMenu
 
             if (trueString == null || falseString == null)
             {
-                throw new ArgumentException("The trueString and falseString aren't allowed to be null.");
+                throw new ArgumentException("The trueString and / or falseString aren't allowed to be null.");
             }
 
             if (trueString.ToLower() == falseString.ToLower())
@@ -173,21 +173,22 @@ namespace CSC160_ConsoleMenu
         /// </exception>
         public static int PromptForMenuSelection(IEnumerable<string> options, bool withQuit)
         {
-            
+            if (options == null)
+            {
+                throw new ArgumentException("'Options' may not be null");
+            }
+
             for (int i = 0; i < options.Count(); i++)
             {
-                if (options.ElementAt(i) == null)
+                if (options.ElementAt(i) == null || options == null)
                 {
                     throw new ArgumentException("No string in 'options' may be null.");
                 }
-                //if (string.IsNullOrWhiteSpace(options.ElementAt(i)))
-                //{
-                //    throw new ArgumentException("No string in 'options' may be null, empty, or contain whitespace.");
-                //}
             }
+
             if (options.Count() == 0 && !withQuit)
             {
-                throw new ArgumentException("If 'options' is empty, then withQuit MUST be true so that user has at least one choice.");
+                throw new ArgumentException("If 'options' is empty, then withQuit MUST be true so that the user has at least one choice.");
             }
 
             bool isInvalid = true;

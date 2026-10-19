@@ -7,7 +7,7 @@
             //DemoInput();
             //DemoBoolean();
             //DemoInt();
-            DemoMenu();
+            //DemoMenu();
         }
 
         private static void DemoInput()
